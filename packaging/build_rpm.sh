@@ -48,7 +48,7 @@ echo "Building version $version"
 
 libuv_version=$(rpm -q --queryformat "%{VERSION}" libuv)
 
-if [[ -e $libuv_version ]]; then
+if [[ -z "$libuv_version" ]]; then
   echo "'libuv' required, but not installed"
   exit 1
 fi

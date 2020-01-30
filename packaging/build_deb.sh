@@ -23,7 +23,7 @@ function header_version {
       printf "%s.%s.%s", major, minor, patch
   }
 EOF
-  version=$(grep '#define[ \t]\+CASS_VERSION_\(MAJOR\|MINOR\|PATCH\|SUFFIX\)' $1 | awk "$version_script")
+  version=$(grep '#define[ \t]\+CASS_VERSION_\(MAJOR\|MINOR\|PATCH\|SUFFIX\)' "$1" | awk "$version_script")
   if [[ ! $version =~ ^[0-9]+\.[0-9]+\.[0-9]+(~[a-zA-Z0-9_\-]+)?$ ]]; then
     echo "Unable to extract version from $1"
     exit 1
@@ -38,14 +38,13 @@ version=$(header_version "../include/cassandra.h")
 release=1
 dist=$(lsb_release -s -c)
 base="cassandra-cpp-driver-$version"
-archive="$base.tar.gz"
 files="CMakeLists.txt cmake cmake_uninstall.cmake.in driver_config.hpp.in include src"
 
 echo "Building version $version"
 
 libuv_version=$(dpkg -s libuv1 | grep 'Version' | awk '{ print $2 }')
 
-if [[ -e $libuv_version ]]; then
+if [[ -z "$libuv_version" ]]; then
   echo "'libuv' required, but not installed"
   exit 1
 fi
@@ -69,7 +68,7 @@ cp -r debian "build/$base"
 
 pushd "build/$base"
 echo "Updating changlog"
-dch -m -v "$version-$release" -D $dist "Version $version"
+dch -m -v "$version-$release" -D "$dist" "Version $version"
 echo "Building package:"
 nprocs=$(grep -e '^processor' -c /proc/cpuinfo)
 DEB_BUILD_OPTIONS="parallel=$nprocs" debuild -i -b -uc -us
