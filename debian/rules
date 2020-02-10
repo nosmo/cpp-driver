@@ -6,6 +6,8 @@ include /usr/share/dpkg/default.mk
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
+PKGNAME=libcassandra2
+
 NUMJOBS=1
 ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
   NUMJOBS=$(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
@@ -29,9 +31,9 @@ override_dh_auto_build:
 	dh_auto_build -- -j$(NUMJOBS)
 
 override_dh_strip:
-	dh_strip --dbg-package=cassandra-cpp-driver-dbg
-	sed -i s/@DEB_HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/ debian/cassandra-cpp-driver-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/*.pc
-	sed -i s/@DEB_VERSION_UPSTREAM@/$(DEB_VERSION_UPSTREAM)/ debian/cassandra-cpp-driver-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/*.pc
+	dh_strip --dbg-package=$(PKGNAME)-dbg
+	sed -i s/@DEB_HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/ debian/$(PKGNAME)-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/*.pc
+	sed -i s/@DEB_VERSION_UPSTREAM@/$(DEB_VERSION_UPSTREAM)/ debian/$(PKGNAME)-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/*.pc
 
 override_dh_makeshlibs:
 	dh_makeshlibs -V

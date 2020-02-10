@@ -1,0 +1,5 @@
+libcassandra2 (1.0.0-1) stable; urgency=low
+
+  * Initial Debian packaging
+
+ -- Hugh Nowlan <hnowlan@wikimedia.org>  Fri, 07 Feb 2020 20:20:27 +0000
