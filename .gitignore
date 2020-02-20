@@ -97,3 +97,12 @@ boost_1_*
 
 # Integration test configuration
 config*.txt
+
+# Packaging files
+debian/.debhelper
+debian/debhelper-build-stamp
+debian/libcassandra2-dbg*
+debian/libcassandra2-dev*
+debian/libcassandra2
+debian/tmp
+obj-x86_64-linux-gnu/
