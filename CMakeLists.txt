@@ -46,6 +46,7 @@ option(CASS_USE_STD_ATOMIC "Use C++11 atomics library" OFF)
 option(CASS_USE_TCMALLOC "Use tcmalloc" OFF)
 option(CASS_USE_ZLIB "Use zlib" ON)
 option(CASS_USE_TIMERFD "Use timerfd (Linux only)" ON)
+option(CASS_DEBUG_SYMBOLS "Build debug symbols" OFF)
 
 # Handle testing dependencies
 if(CASS_BUILD_TESTS)
@@ -75,6 +76,10 @@ endif()
 
 if(CASS_DEBUG_CUSTOM_ALLOC AND CASS_USE_STATIC_LIBS)
   message(WARNING "Debugging the custom allocator while static linking the library can cause your application to fail")
+endif()
+
+if(CASS_DEBUG_SYMBOLS)
+  set(CMAKE_BUILD_TYPE Debug)
 endif()
 
 #---------------

@@ -20,7 +20,7 @@ Description: Apache Cassandra & DataStax Products client driver- shared library
  Cassandra and DataStax Products using Cassandra's native protocol and
  Cassandra Query Language along with extensions for DataStax Products.
 
-Package: libcassandra2-dev
+Package: libcassandra-dev
 Section: libdevel
 Architecture: any
 Depends: libcassandra2 (= ${binary:Version}), ${misc:Depends}

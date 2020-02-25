@@ -8,11 +8,6 @@ include /usr/share/dpkg/default.mk
 
 PKGNAME=libcassandra2
 
-#export SOVER ?= $(shell dpkg-parsechangelog \
-#    | sed -rne 's/^Version: ([0-9.]+)([-+~][[:alpha:]][[:alnum:]]*)?([-+~][[:digit:]])?$$/\1\2/p' \
-#    | sed 's/[+~]/-/')
-#export SONAME=libcassandra.so.$(SOVER)
-
 %:
 	dh $@
 
@@ -20,12 +15,10 @@ override_dh_auto_install:
 	dh_auto_install
 
 override_dh_auto_configure:
-	dh_auto_configure -- -DCMAKE_BUILD_TYPE=RELEASE -DCASS_BUILD_STATIC=ON -DCASS_INSTALL_PKG_CONFIG=OFF -DCMAKE_INSTALL_LIBDIR=/usr/lib
+	dh_auto_configure -- -DCASS_BUILD_STATIC=ON -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_LIBDIR=lib/$(DEB_HOST_MULTIARCH)
 
 override_dh_strip:
 	dh_strip --dbg-package=$(PKGNAME)-dbg
-	sed -i s/@DEB_HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/ debian/$(PKGNAME)-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/*.pc
-	sed -i s/@DEB_VERSION_UPSTREAM@/$(DEB_VERSION_UPSTREAM)/ debian/$(PKGNAME)-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/*.pc
 
 override_dh_makeshlibs:
 	dh_makeshlibs -V

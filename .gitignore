@@ -101,8 +101,8 @@ config*.txt
 # Packaging files
 debian/.debhelper
 debian/debhelper-build-stamp
-debian/libcassandra2-dbg*
-debian/libcassandra2-dev*
+debian/libcassandra-dev*log
+debian/libcassandra2-dbg*log
 debian/libcassandra2
 debian/tmp
 obj-x86_64-linux-gnu/

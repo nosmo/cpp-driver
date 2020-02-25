@@ -245,7 +245,7 @@ endmacro()
 macro(CassConfigureInstall var_prefix pkg_config_stem)
   # Determine if the library directory needs to be determined
   if(NOT DEFINED CMAKE_INSTALL_LIBDIR)
-    if ("${CMAKE_SYSTEM_NAME}" MATCHES "Linux" AND
+    if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux" AND
     ("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr" OR
         "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local"))
       if(EXISTS "/etc/debian_version")
@@ -288,7 +288,7 @@ macro(CassConfigureInstall var_prefix pkg_config_stem)
       if(PKG_CONFIG_FOUND)
         set(prefix ${CMAKE_INSTALL_PREFIX})
         set(exec_prefix ${CMAKE_INSTALL_PREFIX})
-        set(libdir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
+        set(libdir ${CMAKE_INSTALL_LIBDIR})
         set(includedir ${CMAKE_INSTALL_PREFIX}/${INSTALL_HEADER_DIR})
         set(version ${PROJECT_VERSION_STRING})
       endif()
